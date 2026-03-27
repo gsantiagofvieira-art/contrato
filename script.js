@@ -48,10 +48,40 @@ function validarCPF(cpf) {
 // Valor por extenso (simplificado)
 function numeroParaExtenso(valor) {
   valor = valor.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
-  return parseFloat(valor).toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
+  let num = parseFloat(valor);
+
+  if (isNaN(num)) return "";
+
+  const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
+  const dezenas = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta"];
+  const especiais = ["dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+
+  let inteiro = Math.floor(num);
+  let centavos = Math.round((num - inteiro) * 100);
+
+  let texto = "";
+
+  if (inteiro < 10) texto = unidades[inteiro];
+  else if (inteiro < 20) texto = especiais[inteiro - 10];
+  else {
+    texto = dezenas[Math.floor(inteiro / 10)];
+    if (inteiro % 10 !== 0) texto += " e " + unidades[inteiro % 10];
+  }
+
+  texto += " reais";
+
+  if (centavos > 0) {
+    texto += " e ";
+    if (centavos < 10) texto += unidades[centavos];
+    else if (centavos < 20) texto += especiais[centavos - 10];
+    else {
+      texto += dezenas[Math.floor(centavos / 10)];
+      if (centavos % 10 !== 0) texto += " e " + unidades[centavos % 10];
+    }
+    texto += " centavos";
+  }
+
+  return texto;
 }
 
 // Data formato jurídico
@@ -62,6 +92,12 @@ function formatarDataExtenso(data) {
   ];
   const [ano, mes, dia] = data.split("-");
   return `${dia} de ${meses[mes - 1]} de ${ano}`;
+}
+
+// formatar data de periodo
+function formatarDataBR(data) {
+  const [ano, mes, dia] = data.split("-");
+  return `${dia}/${mes}/${ano}`;
 }
 
 // Gerar DOCX
@@ -104,8 +140,8 @@ function gerarDoc() {
         uf: "RJ",
 
         valor: `${valor} (${valorExtenso})`,
-        inicio: document.querySelector('[name="inicio"]').value,
-        fim: document.querySelector('[name="fim"]').value,
+        inicio: formatarDataBR(document.querySelector('[name="inicio"]').value),
+        fim: formatarDataBR(document.querySelector('[name="fim"]').value),
         data: dataFormatada,
       });
 
