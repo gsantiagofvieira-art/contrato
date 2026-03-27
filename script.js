@@ -73,35 +73,60 @@ function gerarDoc() {
     return;
   }
 
-  fetch("modelo.docx")
-    .then((res) => res.arrayBuffer())
+  fetch("./modelo.docx") // 👈 garante caminho correto
+    .then((res) => {
+      if (!res.ok) throw new Error("Erro ao carregar modelo.docx");
+      return res.arrayBuffer();
+    })
     .then((content) => {
       const zip = new PizZip(content);
-      const doc = new window.docxtemplater(zip);
+      const doc = new window.docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
+      });
 
       const valor = document.getElementById("valor").value;
-      const data = document.querySelector('[name="data"]').value;
+      const valorExtenso = numeroParaExtenso(valor);
+
+      const dataBruta = document.querySelector('[name="data"]').value;
+      const dataFormatada = formatarDataExtenso(dataBruta);
 
       doc.setData({
         nome: document.querySelector('[name="nome"]').value,
         cpf: cpf,
         rg: document.getElementById("rg").value,
         nacionalidade: "Brasileiro",
-        estado_civil: document.querySelector("select").value,
+        estado_civil: document.querySelector('[name="estado_civil"]').value,
         endereco: document.querySelector('[name="endereco"]').value,
         numero: document.querySelector('[name="numero"]').value,
         bairro: document.querySelector('[name="bairro"]').value,
         cidade: document.querySelector('[name="cidade"]').value,
         uf: "RJ",
-        valor: valor,
+
+        valor: `${valor} (${valorExtenso})`,
         inicio: document.querySelector('[name="inicio"]').value,
         fim: document.querySelector('[name="fim"]').value,
-        data: formatarDataExtenso(data),
+        data: dataFormatada,
       });
 
-      doc.render();
+      try {
+        doc.render();
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao gerar documento. Verifique os campos.");
+        return;
+      }
 
-      const blob = doc.getZip().generate({ type: "blob" });
-      saveAs(blob, "Contrato.docx");
+      const blob = doc.getZip().generate({
+        type: "blob",
+        mimeType:
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
+
+      saveAs(blob, "Contrato.docx"); // 👈 DOWNLOAD AQUI
+    })
+    .catch((erro) => {
+      console.error(erro);
+      alert("Erro ao carregar o modelo.docx");
     });
 }
