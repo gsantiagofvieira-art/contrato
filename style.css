@@ -72,13 +72,15 @@ button:hover {
 }
 
 .logo-container {
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .logo-container img {
-  width: 180px; /* ajusta aqui se quiser maior */
-  max-width: 100%;
+  width: 140px;        /* 👈 menor que o form */
+  max-width: 80%;      /* 👈 nunca ultrapassa */
+  height: auto;
 }
 
 .logo-container img {
