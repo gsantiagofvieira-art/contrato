@@ -8,6 +8,7 @@
 body {
   background: linear-gradient(135deg, #124729, #4B8162);
   padding: 20px;
+  position: relative;
 }
 
 form {
@@ -20,6 +21,10 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  /* 🔥 garante que fique acima da marca d'água */
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -71,14 +76,6 @@ button:hover {
   background: linear-gradient(135deg, #124729, #4B8162);
 }
 
-body {
-  background: linear-gradient(135deg, #124729, #4B8162);
-  padding: 20px;
-
-  /* 🔥 MARCA D'ÁGUA */
-  position: relative;
-}
-
 body::before {
   content: "";
   position: fixed;
@@ -86,21 +83,16 @@ body::before {
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 400px; /* tamanho da marca */
-  height: 400px;
+  width: 350px; /* 👈 um pouco menor */
+  height: 350px;
 
   background: url("./logo.png") no-repeat center;
   background-size: contain;
 
-  opacity: 0.05; /* 👈 transparência (ajuste aqui) */
+  opacity: 0.04; /* 👈 mais elegante */
 
-  pointer-events: none; /* não interfere no clique */
+  pointer-events: none;
   z-index: 0;
-}
-
-form {
-  position: relative;
-  z-index: 1;
 }
 
 @media (max-width: 600px) {
