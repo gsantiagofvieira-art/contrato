@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <form id="formCadastro">
+      <h1>Novo Contrato</h1>
+
+      <label>Nome Completo:</label>
+      <input type="text" name="nome" required />
+
+      <div class="linha">
+        <div>
+          <label>Nacionalidade:</label>
+          <input type="text" value="Brasileiro" required />
+        </div>
+
+        <div>
+          <label>Estado Civil:</label>
+          <select>
+            <option>Solteiro</option>
+            <option>Casado</option>
+            <option>Divorciado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label>RG:</label>
+          <input type="text" id="rg" maxlength="12" />
+        </div>
+
+        <div>
+          <label>CPF:</label>
+          <input type="text" id="cpf" maxlength="14" required />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label>Endereço:</label>
+          <input type="text" required />
+        </div>
+
+        <div>
+          <label>Número:</label>
+          <input type="text" required />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label>Complemento:</label>
+          <input type="text" />
+        </div>
+
+        <div>
+          <label>Bairro:</label>
+          <input type="text" required />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label>Cidade:</label>
+          <input type="text" required />
+        </div>
+
+        <div>
+          <label>UF:</label>
+          <input type="text" value="RJ" required />
+        </div>
+      </div>
+
+      <!-- Linha separadora -->
+      <hr />
+
+      <div class="linha">
+        <div>
+          <label>Período Início:</label>
+          <input type="date" required />
+        </div>
+
+        <div>
+          <label>Período Fim:</label>
+          <input type="date" required />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label>Valor da Diária:</label>
+          <input type="text" id="valor" placeholder="R$ 0,00" required />
+        </div>
+
+        <div>
+          <label>Data do Contrato:</label>
+          <input type="date" required />
+        </div>
+      </div>
+
+      <button type="button" onclick="gerarDoc()">Gerar Contrato</button>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.5/pizzip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.37.1/docxtemplater.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
