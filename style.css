@@ -71,21 +71,36 @@ button:hover {
   background: linear-gradient(135deg, #124729, #4B8162);
 }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
+body {
+  background: linear-gradient(135deg, #124729, #4B8162);
+  padding: 20px;
+
+  /* 🔥 MARCA D'ÁGUA */
+  position: relative;
 }
 
-.logo-container img {
-  width: 140px;        /* 👈 menor que o form */
-  max-width: 80%;      /* 👈 nunca ultrapassa */
-  height: auto;
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 400px; /* tamanho da marca */
+  height: 400px;
+
+  background: url("./logo.png") no-repeat center;
+  background-size: contain;
+
+  opacity: 0.05; /* 👈 transparência (ajuste aqui) */
+
+  pointer-events: none; /* não interfere no clique */
+  z-index: 0;
 }
 
-.logo-container img {
-  width: 180px;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+form {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 600px) {
