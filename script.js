@@ -47,10 +47,14 @@ function validarCPF(cpf) {
 
 // Valor por extenso (simplificado)
 function numeroParaExtenso(valor) {
-  valor = valor.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
-  let num = parseFloat(valor);
+  if (!valor) return "";
 
-  if (isNaN(num)) return "";
+  // limpa tudo que não for número
+  let num = valor.replace(/\D/g, "");
+
+  if (!num) return "";
+
+  num = parseFloat(num) / 100;
 
   const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
   const dezenas = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta"];
@@ -61,23 +65,30 @@ function numeroParaExtenso(valor) {
 
   let texto = "";
 
-  if (inteiro < 10) texto = unidades[inteiro];
+  if (inteiro === 0) texto = "zero";
+  else if (inteiro < 10) texto = unidades[inteiro];
   else if (inteiro < 20) texto = especiais[inteiro - 10];
   else {
     texto = dezenas[Math.floor(inteiro / 10)];
-    if (inteiro % 10 !== 0) texto += " e " + unidades[inteiro % 10];
+    if (inteiro % 10 !== 0) {
+      texto += " e " + unidades[inteiro % 10];
+    }
   }
 
   texto += " reais";
 
   if (centavos > 0) {
     texto += " e ";
+
     if (centavos < 10) texto += unidades[centavos];
     else if (centavos < 20) texto += especiais[centavos - 10];
     else {
       texto += dezenas[Math.floor(centavos / 10)];
-      if (centavos % 10 !== 0) texto += " e " + unidades[centavos % 10];
+      if (centavos % 10 !== 0) {
+        texto += " e " + unidades[centavos % 10];
+      }
     }
+
     texto += " centavos";
   }
 
