@@ -158,6 +158,12 @@ function gerarDoc() {
     return;
   }
 
+  const rgValor = document.getElementById("rg").value;
+  let rgFormatado = "";
+  if (rgValor && rgValor.trim() !== "") {
+    rgFormatado = `portador da Cédula de Identidade RG nº ${rgValor} e `;
+  }
+
   fetch("./modelo.docx") // 👈 garante caminho correto
     .then((res) => {
       if (!res.ok) throw new Error("Erro ao carregar modelo.docx");
@@ -178,11 +184,12 @@ function gerarDoc() {
 
       doc.setData({
         nome: document.querySelector('[name="nome"]').value,
+        rg_texto: rgFormatado,
         cpf: cpf,
         rg: document.getElementById("rg").value,
       
-        nacionalidade: document.querySelector('[name="nacionalidade"]').value,
-        estado_civil: document.querySelector('[name="estado_civil"]').value,
+        nacionalidade: document.querySelector('[name="nacionalidade"]').value.toLowerCase(),
+        estado_civil: document.querySelector('[name="estado_civil"]').value.toLowerCase(),
       
         endereco: document.querySelector('[name="endereco"]').value,
         numero: document.querySelector('[name="numero"]').value,
