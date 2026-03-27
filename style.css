@@ -77,6 +77,11 @@ button:hover {
 }
 
 .logo-container img {
+  width: 180px; /* ajusta aqui se quiser maior */
+  max-width: 100%;
+}
+
+.logo-container img {
   width: 180px;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
 }
