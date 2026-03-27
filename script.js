@@ -65,31 +65,37 @@ function numeroParaExtenso(valor) {
   let texto = "";
 
   // 🔹 CENTENAS
-  if (inteiro === 100) {
+  if (inteiro === 0) {
+    texto = "zero";
+  } else if (inteiro === 100) {
     texto = "cem";
   } else if (inteiro > 100) {
-    texto = centenas[Math.floor(inteiro / 100)];
+    let c = Math.floor(inteiro / 100);
     let resto = inteiro % 100;
 
-    if (resto > 0) texto += " e ";
+    texto = centenas[c];
 
-    // dezenas + unidades
-    if (resto < 10) {
-      texto += unidades[resto];
-    } else if (resto < 20) {
-      texto += especiais[resto - 10];
-    } else {
-      texto += dezenas[Math.floor(resto / 10)];
-      if (resto % 10 !== 0) {
-        texto += " e " + unidades[resto % 10];
+    if (resto > 0) {
+      texto += " e ";
+
+      if (resto < 10) {
+        texto += unidades[resto];
+      } else if (resto < 20) {
+        texto += especiais[resto - 10];
+      } else {
+        texto += dezenas[Math.floor(resto / 10)];
+        if (resto % 10 !== 0) {
+          texto += " e " + unidades[resto % 10];
+        }
       }
     }
   } else {
-    // 🔹 até 99 (seu código original melhorado)
-    if (inteiro === 0) texto = "zero";
-    else if (inteiro < 10) texto = unidades[inteiro];
-    else if (inteiro < 20) texto = especiais[inteiro - 10];
-    else {
+    // 🔹 até 99
+    if (inteiro < 10) {
+      texto = unidades[inteiro];
+    } else if (inteiro < 20) {
+      texto = especiais[inteiro - 10];
+    } else {
       texto = dezenas[Math.floor(inteiro / 10)];
       if (inteiro % 10 !== 0) {
         texto += " e " + unidades[inteiro % 10];
@@ -139,6 +145,13 @@ function formatarDataBR(data) {
 // Gerar DOCX
 function gerarDoc() {
   const cpf = document.getElementById("cpf").value;
+  const complementoInput = document.querySelector('[name="complemento"]').value;
+
+  let complementoFormatado = "";
+  
+  if (complementoInput && complementoInput.trim() !== "") {
+    complementoFormatado = `${complementoInput}, `;
+  }
 
   if (!validarCPF(cpf)) {
     alert("CPF inválido");
@@ -171,6 +184,7 @@ function gerarDoc() {
         estado_civil: document.querySelector('[name="estado_civil"]').value,
         endereco: document.querySelector('[name="endereco"]').value,
         numero: document.querySelector('[name="numero"]').value,
+        complemento: complementoFormatado,
         bairro: document.querySelector('[name="bairro"]').value,
         cidade: document.querySelector('[name="cidade"]').value,
         uf: "RJ",
