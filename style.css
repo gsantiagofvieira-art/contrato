@@ -1,32 +1,39 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Fundo */
+body {
+  background: linear-gradient(135deg, #124729, #4B8162);
+  padding: 20px;
+}
+
+/* Formulário */
 form {
-  background-color: #ffffff;
-  padding: 30px;
+  background: #fff;
+  padding: 25px;
   border-radius: 12px;
-  width: 420px;
+  max-width: 700px; /* 👈 evita quebrar layout */
+  margin: auto;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Título */
 h1 {
   text-align: center;
   margin-bottom: 20px;
   color: #124729;
 }
 
+/* Labels */
 label {
   font-size: 13px;
   color: #124729;
   font-weight: bold;
-}
-
-/* Linha com duas colunas */
-.linha {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.linha div {
-  flex: 1;
 }
 
 /* Inputs */
@@ -39,22 +46,45 @@ select {
   border: 1px solid #ccc;
 }
 
-/* Linha separadora */
+/* LINHA (duas colunas) */
+.linha {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+/* Cada coluna */
+.linha > div {
+  flex: 1;
+}
+
+/* 👉 RESPONSIVIDADE (ESSENCIAL) */
+@media (max-width: 600px) {
+  .linha {
+    flex-direction: column; /* quebra pra uma coluna no celular */
+  }
+}
+
+/* Separador */
 hr {
   margin: 20px 0;
   border: none;
   height: 1px;
-  background-color: #ddd;
+  background: #ddd;
 }
 
 /* Botão */
 button {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #4b8162, #579772);
+  background: linear-gradient(135deg, #4B8162, #579772);
   color: white;
   border: none;
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #124729, #4B8162);
 }
