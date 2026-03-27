@@ -71,6 +71,16 @@ button:hover {
   background: linear-gradient(135deg, #124729, #4B8162);
 }
 
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo-container img {
+  width: 180px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+}
+
 @media (max-width: 600px) {
   .linha {
     flex-direction: column;
