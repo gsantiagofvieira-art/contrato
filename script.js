@@ -123,7 +123,12 @@ function gerarDoc() {
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       });
 
-      saveAs(blob, "Contrato.docx"); // 👈 DOWNLOAD AQUI
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "Contrato.docx";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     })
     .catch((erro) => {
       console.error(erro);
