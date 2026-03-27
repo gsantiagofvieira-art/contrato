@@ -180,15 +180,17 @@ function gerarDoc() {
         nome: document.querySelector('[name="nome"]').value,
         cpf: cpf,
         rg: document.getElementById("rg").value,
-        nacionalidade: "Brasileiro",
+      
+        nacionalidade: document.querySelector('[name="nacionalidade"]').value,
         estado_civil: document.querySelector('[name="estado_civil"]').value,
+      
         endereco: document.querySelector('[name="endereco"]').value,
         numero: document.querySelector('[name="numero"]').value,
         complemento: complementoFormatado,
         bairro: document.querySelector('[name="bairro"]').value,
         cidade: document.querySelector('[name="cidade"]').value,
-        uf: "RJ",
-
+        uf: document.querySelector('[name="uf"]').value,
+      
         valor: `${valor} (${valorExtenso})`,
         inicio: formatarDataBR(document.querySelector('[name="inicio"]').value),
         fim: formatarDataBR(document.querySelector('[name="fim"]').value),
