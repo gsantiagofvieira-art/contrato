@@ -159,25 +159,27 @@ function gerarNomeContrato(campoNome, campoInicio, campoFim) {
 }
 
 // Gerar DOCX
-function gerarNomeContrato() {
-  const nomeInput = document.getElementById("nome");
-  const inicioInput = document.getElementById("inicio");
-  const fimInput = document.getElementById("fim");
+function gerarDoc() {
+  const cpf = document.getElementById("cpf").value;
+  const complementoInput = document.querySelector('[name="complemento"]').value;
 
-  const nome = nomeInput.value.trim().replace(/\s+/g, "_");
+  let complementoFormatado = "";
+  
+  if (complementoInput && complementoInput.trim() !== "") {
+    complementoFormatado = `${complementoInput}, `;
+  }
 
-  const inicio = new Date(inicioInput.value);
-  const fim = new Date(fimInput.value);
+    if (!validarCPF(cpf)) {
+    alert("CPF inválido");
+    return;
+  }
 
-  const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-
-  const mesInicio = meses[inicio.getMonth()];
-  const mesFim = meses[fim.getMonth()];
-  const ano = inicio.getFullYear();
-
-  return `Contrato_${nome}-${mesInicio}_${mesFim}_${ano}.docx`;
-}
-
+    const rgValor = document.getElementById("rg").value;
+  let rgFormatado = "";
+  if (rgValor && rgValor.trim() !== "") {
+    rgFormatado = `portador da Cédula de Identidade RG nº ${rgValor} e `;
+  }
+  
   fetch("./modelo.docx") // 👈 garante caminho correto
     .then((res) => {
       if (!res.ok) throw new Error("Erro ao carregar modelo.docx");
