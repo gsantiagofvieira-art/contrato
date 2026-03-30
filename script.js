@@ -142,27 +142,41 @@ function formatarDataBR(data) {
   return `${dia}/${mes}/${ano}`;
 }
 
+// formatar nome do arquivo
+function gerarNomeContrato(campoNome, campoInicio, campoFim) {
+  const nome = campoNome.value.trim().replace(/\s+/g, "_");
+
+  const inicio = new Date(campoInicio.value);
+  const fim = new Date(campoFim.value);
+
+  const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+  const mesInicio = meses[inicio.getMonth()];
+  const mesFim = meses[fim.getMonth()];
+  const ano = inicio.getFullYear();
+
+  return `Contrato_${nome}-${mesInicio}_${mesFim}_${ano}.docx`;
+}
+
 // Gerar DOCX
-function gerarDoc() {
-  const cpf = document.getElementById("cpf").value;
-  const complementoInput = document.querySelector('[name="complemento"]').value;
+function gerarNomeContrato() {
+  const nomeInput = document.getElementById("nome");
+  const inicioInput = document.getElementById("inicio");
+  const fimInput = document.getElementById("fim");
 
-  let complementoFormatado = "";
-  
-  if (complementoInput && complementoInput.trim() !== "") {
-    complementoFormatado = `${complementoInput}, `;
-  }
+  const nome = nomeInput.value.trim().replace(/\s+/g, "_");
 
-  if (!validarCPF(cpf)) {
-    alert("CPF inválido");
-    return;
-  }
+  const inicio = new Date(inicioInput.value);
+  const fim = new Date(fimInput.value);
 
-  const rgValor = document.getElementById("rg").value;
-  let rgFormatado = "";
-  if (rgValor && rgValor.trim() !== "") {
-    rgFormatado = `portador da Cédula de Identidade RG nº ${rgValor} e `;
-  }
+  const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+  const mesInicio = meses[inicio.getMonth()];
+  const mesFim = meses[fim.getMonth()];
+  const ano = inicio.getFullYear();
+
+  return `Contrato_${nome}-${mesInicio}_${mesFim}_${ano}.docx`;
+}
 
   fetch("./modelo.docx") // 👈 garante caminho correto
     .then((res) => {
@@ -220,7 +234,7 @@ function gerarDoc() {
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = "Contrato.docx";
+      link.download = gerarNomeContrato();
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
