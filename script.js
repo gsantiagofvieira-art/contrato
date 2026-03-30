@@ -142,22 +142,6 @@ function formatarDataBR(data) {
   return `${dia}/${mes}/${ano}`;
 }
 
-// formatar nome do arquivo
-function gerarNomeContrato(campoNome, campoInicio, campoFim) {
-  const nome = campoNome.value.trim().replace(/\s+/g, "_");
-
-  const inicio = new Date(campoInicio.value);
-  const fim = new Date(campoFim.value);
-
-  const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-
-  const mesInicio = meses[inicio.getMonth()];
-  const mesFim = meses[fim.getMonth()];
-  const ano = inicio.getFullYear();
-
-  return `Contrato_${nome}-${mesInicio}_${mesFim}_${ano}.docx`;
-}
-
 // Gerar DOCX
 function gerarDoc() {
   const cpf = document.getElementById("cpf").value;
@@ -169,12 +153,12 @@ function gerarDoc() {
     complementoFormatado = `${complementoInput}, `;
   }
 
-    if (!validarCPF(cpf)) {
+  if (!validarCPF(cpf)) {
     alert("CPF inválido");
     return;
   }
 
-    const rgValor = document.getElementById("rg").value;
+  const rgValor = document.getElementById("rg").value;
   let rgFormatado = "";
   if (rgValor && rgValor.trim() !== "") {
     rgFormatado = `portador da Cédula de Identidade RG nº ${rgValor} e `;
@@ -236,7 +220,7 @@ function gerarDoc() {
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
-      link.download = gerarNomeContrato();
+      link.download = "Contrato.docx";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
